@@ -17,7 +17,7 @@ args = parser.parse_args()
 
 ndk_make = args.ndk + "/prebuilt/linux-x86_64/bin/make"
 
-if not os.path.exists:
+if not os.path.exists("android-build"):
     os.mkdir("android-build")
 os.chdir("android-build")
 
