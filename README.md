@@ -61,8 +61,8 @@ make
 
 **Compilación:**
 
-Utilize el script `android_build.py`.  
-`./android_build.py --help` para más información.
+Utilize el script `build-android.py`.  
+`./build-android.py --help` para más información.
 
 ## Windows
 
