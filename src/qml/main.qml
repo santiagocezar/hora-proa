@@ -12,7 +12,7 @@ ApplicationWindow {
     visible: true
     width: 840
     height: 640
-    title: qsTr("Hello World")
+    title: qsTr("HoraProA")
 
     Material.theme: Material.Light
     Material.accent: Material.Blue
