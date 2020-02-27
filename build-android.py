@@ -17,8 +17,9 @@ args = parser.parse_args()
 
 ndk_make = args.ndk + "/prebuilt/linux-x86_64/bin/make"
 
-os.mkdir("build (Android)")
-os.chdir("build (Android)")
+if not os.path.exists:
+    os.mkdir("android-build")
+os.chdir("android-build")
 
 os.system(args.qmake + " .. -spec android-clang ANDROID_ABIS=\"" + args.abi + "\"")
 os.system(ndk_make + " -j" + str(args.cores) + " apk")
