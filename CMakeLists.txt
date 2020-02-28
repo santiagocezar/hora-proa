@@ -34,10 +34,17 @@ find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 
 set(SOURCES
     src/main.cpp
+    src/planilladb.h
+    src/planilladb.cpp
 )
 
 set(RESOURCES
     src/qml/qml.qrc
+)
+
+include_directories(
+    include/
+    src/
 )
 
 if(ANDROID)
