@@ -1,0 +1,9 @@
+[submodule "json-schema-validator"]
+	path = json-schema-validator
+	url = https://github.com/pboettch/json-schema-validator
+[submodule "json"]
+	path = json
+	url = https://github.com/nlohmann/json
+[submodule "qt-android-cmake"]
+	path = qt-android-cmake
+	url = https://github.com/LaurentGomila/qt-android-cmake.git
