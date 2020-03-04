@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="41.984468"
-     inkscape:cx="36.228157"
-     inkscape:cy="26.548658"
+     inkscape:zoom="13.771058"
+     inkscape:cx="11.61751"
+     inkscape:cy="-15.06331"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -35,7 +35,7 @@
      inkscape:snap-bbox="false"
      inkscape:bbox-nodes="true"
      inkscape:snap-nodes="true"
-     inkscape:window-width="1366"
+     inkscape:window-width="1360"
      inkscape:window-height="703"
      inkscape:window-x="0"
      inkscape:window-y="0"
@@ -176,18 +176,6 @@
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="1843.1975"
        inkscape:export-ydpi="1843.1975" />
-    <circle
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458335;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-       id="path1421"
-       cx="51.06459"
-       cy="130.04793"
-       r="0.13229167" />
-    <circle
-       r="0.13229167"
-       cy="127.93128"
-       cx="57.67918"
-       id="circle1423"
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458335;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" />
     <path
        inkscape:export-ydpi="792.77411"
        inkscape:export-xdpi="792.77411"
@@ -266,11 +254,5 @@
        id="path885"
        d="m 51.064583,138.77912 a 0.26458332,0.26458332 0 0 0 -0.264584,0.26458 v 0.79375 h 0.529167 v -0.52917 h 0.529167 v -0.52916 z"
        style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:5.29166651;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" />
-    <circle
-       r="0.13229167"
-       cy="139.04379"
-       cx="51.06459"
-       id="circle887"
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458335;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" />
   </g>
 </svg>
