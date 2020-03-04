@@ -13,10 +13,66 @@ Item {
     id: table
     readonly property int columns: 6
     readonly property int rows: 14
-    
+
+    property var jsonData
+
+    Component.onCompleted: {
+        jsonData = JSON.parse(plt.getJson())
+        jsonData.days.forEach(function (v, i, a) {
+            if (i > 5) {
+                return
+            }
+            var day = i
+            v.forEach(function (v,i,a) {
+                var mod = week.getDay(day).getMod(v.pos)
+                mod.duration = v.duration
+                mod.empty = false
+            })
+            week.getDay(day).updateCells()
+        })
+    }
+
+    function setJsonMod (day, pos, duration, id) {
+        if (day === undefined) return
+        if (pos === undefined) return
+        if (duration === undefined) return
+        if (id === undefined) return
+
+        console.log(day, pos, duration, id)
+        var d = jsonData.days[day]
+        var exists = false
+        var mod
+
+        for (var i in d) {
+            if (i.positon === pos) {
+                i.duration = duration
+                i.id = id
+                break
+            }
+        }
+
+        if (!exists) {
+            mod = d.push({"id":id,"pos":pos,"duration":duration})
+        }
+        plt.setJson(JSON.stringify(jsonData))
+    }
+
     ColumnLayout {
         RowLayout {
             Layout.fillWidth: true
+            RoundButton {
+                font.family: "Material Icons"
+                font.pixelSize: 24
+                text: Icons.list.menu
+                flat: true
+                onPressed: menu.popup()
+                Menu {
+                    id: menu
+                    MenuItem { text: "Importar" }
+                    MenuItem { text: "Exportar" }
+                    MenuItem { text: "Editar" }
+                }
+            }
             Label {
                 text: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"][swip.currentIndex]
                 font.pointSize: 16
@@ -25,27 +81,24 @@ Item {
             Item {
                 Layout.fillWidth: true
             }
-            Button {
+            RoundButton {
                 font.family: "Material Icons"
                 font.pixelSize: 24
                 text: Icons.list.arrow_back
-                implicitWidth: height
                 flat: true
                 onPressed: swip.decrementCurrentIndex()
             }
-            Button {
+            RoundButton {
                 font.family: "Material Icons"
                 font.pixelSize: 24
                 text: Icons.list.today
-                implicitWidth: height
                 flat: true
                 onPressed: swip.currentIndex = swip.today()
             }
-            Button {
+            RoundButton {
                 font.family: "Material Icons"
                 font.pixelSize: 24
                 text: Icons.list.arrow_forward
-                implicitWidth: height
                 flat: true
                 onPressed: swip.incrementCurrentIndex()
             }
@@ -56,14 +109,15 @@ Item {
         RowLayout {
             Layout.fillHeight: true
             ColumnLayout {
+                Layout.topMargin: -8
+                Layout.bottomMargin: -8
+                spacing: 0
                 Layout.fillHeight: true
                 Repeater {
                     model: table.rows
                     Label {
                         Layout.fillHeight: true
-                        readonly property int minutes: (index * 40) + (Math.floor(index / 2) * 10) + (index > 5 ? -5 : 0) + (index > 7 ? -10 : 0)
-                        //text: "hola"
-                        text: Tools.minutesToTime(minutes + 30 + 7 * 60) + " a " + Tools.minutesToTime(minutes + 30 + 7 * 60 + 40) + "   |   "
+                        text: jsonData.moduleText[index] + "  »  "
                         verticalAlignment: Qt.AlignVCenter
                         color: Material.backgroundDimColor
                     }
@@ -88,52 +142,69 @@ Item {
 
                 Repeater {
                     model: table.columns - 1
-                    Item {
-                        ColumnLayout {
-                            anchors.fill: parent
-                            spacing: 0
-                            id: day
+                    id: week
 
-                            Repeater {
-                                id: repeat
-                                model: table.rows
-                                function updateCells(i, d) {
-                                    console.log(i)
+                    function getDay(n) {
+                        return itemAt(n)
+                    }
 
-                                    for (var j = 1; j < d; j++) {
-                                        try {
-                                            if (!itemAt(i+j).empty) {
-                                                itemAt(i).duration = j
-                                                d = j
-                                                break
-                                            }
+                    ColumnLayout {
+                        spacing: 0
+                        id: day
+
+                        function dayNumber() {
+                            return index
+                        }
+
+                        function getMod(n) {
+                            return repeat.itemAt(n)
+                        }
+                        function updateCells(i, d) {
+                            repeat.updateCells(i, d)
+                        }
+
+                        Repeater {
+                            id: repeat
+                            model: table.rows
+                            function updateCells(i, d) {
+                                console.log("i:", i, "d:", d)
+
+                                for (var j = 1; j < d; j++) {
+                                    try {
+                                        if (!itemAt(i+j).empty) {
+                                            itemAt(i).duration = j
+                                            d = j
+                                            break
                                         }
-                                        catch(err) {
-                                            if (err instanceof TypeError) {
-                                                itemAt(i).duration = j
-                                                d = j
-                                                break
-                                            }
+                                    }
+                                    catch(err) {
+                                        if (err instanceof TypeError) {
+                                            itemAt(i).duration = j
+                                            d = j
+                                            break
                                         }
-
                                     }
 
-                                    for (j = 1; j < d; j++) {
-                                        itemAt(i+j).visible = false
-                                    }
-                                    for (j = d; j < 3; j++) {
-                                        itemAt(i+j).visible = true
-                                    }
                                 }
 
-                                Modulo {
-                                    rowHeight: day.height / table.rows
-                                    Layout.fillWidth: true
-                                    onModified: repeat.updateCells(i, d)
+                                for (j = 1; j < d; j++) {
+                                    itemAt(i+j).visible = false
                                 }
+                                for (j = d; j < 3; j++) {
+                                    itemAt(i+j).visible = true
+                                }
+
+                                setJsonMod(day.dayNumber(), i, d, 0)
+                            }
+
+                            Modulo {
+                                rowHeight: day.height / table.rows
+                                Layout.fillWidth: true
+                                onModified: repeat.updateCells(i, d)
                             }
                         }
                     }
+
                 }
             }
         }

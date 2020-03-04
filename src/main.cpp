@@ -2,12 +2,20 @@
 #include <QQmlApplicationEngine>
 #include <QFontDatabase>
 #include <planilladb.h>
+#include <QQmlContext>
+
+#include <iostream>
+using namespace std;
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
+
+    Planilla p;
+    p.open("aa");
+    engine.rootContext()->setContextProperty("plt", &p);
 
     QFontDatabase::addApplicationFont(":assets/material-icons.ttf");
 
@@ -19,9 +27,7 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
-    PlanillaDB p;
-
-    p.savePlanilla("aa");
-
-    return app.exec();
+    auto r = app.exec();
+    p.save("aa");
+    return r;
 }
