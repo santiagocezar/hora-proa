@@ -4,11 +4,15 @@ project(HoraProA LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+add_subdirectory(json/)
+add_subdirectory(json-schema-validator/)
+
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
@@ -24,23 +28,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-if(WIN32)
-    set(CMAKE_SYSROOT
-        "/home/santi/Programacion/Qt/mxe/"
-    )
-endif()
 
 find_package(Qt5 COMPONENTS Core Quick REQUIRED)
-
-set(SOURCES
-    src/main.cpp
-    src/planilladb.h
-    src/planilladb.cpp
-)
-
-set(RESOURCES
-    src/qml/qml.qrc
-)
 
 include_directories(
     include/
@@ -49,17 +38,30 @@ include_directories(
 
 if(ANDROID)
     add_library(HoraProA SHARED
-        ${SOURCES}
-        ${RESOURCES}
+        src/main.cpp
+        src/planilladb.h
+        src/planilladb.cpp
+        src/qml/qml.qrc
     )
+
 else()
     add_executable(HoraProA
-        ${SOURCES}
-        ${RESOURCES}
+        src/main.cpp
+        src/planilladb.h
+        src/planilladb.cpp
+        src/qml/qml.qrc
+    )
+endif()
+
+if(ANDROID)
+    include(qt-android-cmake/AddQtAndroidApk.cmake)
+    add_qt_android_apk(HoraProA_apk HoraProA
+        PACKAGE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/android
     )
 endif()
 
 target_compile_definitions(HoraProA
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+
 target_link_libraries(HoraProA
-  PRIVATE Qt5::Core Qt5::Quick)
+  PRIVATE Qt5::Core Qt5::Quick nlohmann_json::nlohmann_json nlohmann_json_schema_validator)
