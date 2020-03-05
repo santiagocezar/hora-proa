@@ -17,7 +17,7 @@ Item {
     property var jsonData
 
     Component.onCompleted: {
-        jsonData = JSON.parse(plt.getJson())
+        jsonData = JSON.parse(dta.getJson())
         jsonData.days.forEach(function (v, i, a) {
             if (i > 5) {
                 return
@@ -54,7 +54,7 @@ Item {
         if (!exists) {
             mod = d.push({"id":id,"pos":pos,"duration":duration})
         }
-        plt.setJson(JSON.stringify(jsonData))
+        dta.setJson(JSON.stringify(jsonData))
     }
 
     ColumnLayout {

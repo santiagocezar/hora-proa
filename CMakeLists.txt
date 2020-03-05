@@ -39,16 +39,16 @@ include_directories(
 if(ANDROID)
     add_library(HoraProA SHARED
         src/main.cpp
-        src/planilladb.h
-        src/planilladb.cpp
+        src/data.h
+        src/data.cpp
         src/qml/qml.qrc
     )
 
 else()
     add_executable(HoraProA
         src/main.cpp
-        src/planilladb.h
-        src/planilladb.cpp
+        src/data.h
+        src/data.cpp
         src/qml/qml.qrc
     )
 endif()

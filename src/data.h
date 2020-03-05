@@ -1,5 +1,5 @@
-#ifndef PLANILLADB_H
-#define PLANILLADB_H
+#ifndef DATA_H
+#define DATA_H
 
 #include <string>
 #include <QObject>
@@ -18,7 +18,7 @@ using nlohmann::json;
 using nlohmann::json_schema::json_validator;
 
 
-class Planilla : public QObject
+class Data : public QObject
 {
     Q_OBJECT
 
@@ -33,7 +33,7 @@ protected:
 
 public:
 
-    explicit Planilla(QObject *parent = nullptr);
+    explicit Data(QObject *parent = nullptr);
 
     Q_INVOKABLE qint8 open(QString name);
     Q_INVOKABLE void save(QString name);
@@ -42,4 +42,4 @@ public:
 
 };
 
-#endif // PLANILLADB_H
+#endif // DATA_H

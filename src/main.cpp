@@ -1,7 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QFontDatabase>
-#include <planilladb.h>
+#include <data.h>
 #include <QQmlContext>
 
 #include <iostream>
@@ -13,9 +13,9 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
-    Planilla p;
+    Data p;
     p.open("aa");
-    engine.rootContext()->setContextProperty("plt", &p);
+    engine.rootContext()->setContextProperty("dta", &p);
 
     QFontDatabase::addApplicationFont(":assets/material-icons.ttf");
 

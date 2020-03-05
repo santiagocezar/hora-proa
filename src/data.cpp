@@ -1,7 +1,7 @@
-﻿#include "planilladb.h"
+﻿#include "data.h"
 using namespace std;
 
-Planilla::Planilla(QObject *parent) : QObject(parent) {
+Data::Data(QObject *parent) : QObject(parent) {
     QDir dir(appData);
     if (!dir.exists()) dir.mkdir(appData);
 
@@ -86,7 +86,7 @@ Planilla::Planilla(QObject *parent) : QObject(parent) {
     )"_json;
 }
 
-qint8 Planilla::open(QString name) {
+qint8 Data::open(QString name) {
     json_validator v;
 
     try {
@@ -118,17 +118,17 @@ qint8 Planilla::open(QString name) {
     }
 }
 
-void Planilla::save(QString name) {
+void Data::save(QString name) {
     ofstream dataFile;
     dataFile.open(appData.toStdString() + "/" + name.toStdString() + ".json");
     dataFile << jsonData.dump(4);
     dataFile.close();
 }
 
-QString Planilla::getJson() {
+QString Data::getJson() {
     return QString::fromStdString(jsonData.dump());
 }
 
-void Planilla::setJson(QString j) {
+void Data::setJson(QString j) {
     jsonData = json::parse(j.toStdString());
 }
