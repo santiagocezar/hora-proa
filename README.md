@@ -66,7 +66,7 @@ Utilize el script `build-android.py`.
 
 ## Windows
 
-En progreso...
+Use [Qt Creator](https://www.qt.io/download) para compilarlo.
 
 ## macOS y iOS
 
