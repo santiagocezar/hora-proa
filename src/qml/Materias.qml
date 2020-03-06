@@ -10,21 +10,29 @@ import "icons.js" as Icons
 
 Item {
     id: materias
-    
-    ScrollView {
+
+    Flickable {
+
+        contentWidth: columns.width
+        contentHeight: columns.height
         anchors.fill: parent
+
+        ScrollBar.vertical: ScrollBar {}
+        boundsBehavior: Flickable.StopAtBounds
+
         ColumnLayout {
             implicitWidth: materias.width
+            spacing: -8
+            id: columns
             Repeater {
                 model: 30
                 MateriaCard {
                     implicitHeight: 48
+                    Layout.margins: 8
                     Layout.fillWidth: true
                 }
             }
-
-        }
-        
+        } 
     }
     
     

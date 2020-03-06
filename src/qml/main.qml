@@ -53,7 +53,6 @@ ApplicationWindow {
             Materias {
                 id: materias
                 anchors.fill: parent
-                anchors.margins: 16
             }
         }
 
