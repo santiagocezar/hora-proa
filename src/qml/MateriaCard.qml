@@ -7,6 +7,8 @@ import "icons.js" as Icons
 
 Pane {
     Material.elevation: 2
+    property color color: Material.backgroundColor
+    Material.background: color
     RowLayout {
         anchors.fill: parent
         Label {
