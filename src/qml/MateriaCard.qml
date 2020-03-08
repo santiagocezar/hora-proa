@@ -6,14 +6,28 @@ import QtQuick.Layouts 1.12
 import "icons.js" as Icons
 
 Pane {
+    id: card
+
+    property int bgColor: Material.LightBlue
+    property string subject: ""
+    property int taskNumb: 0
+    property int uid
+
     Material.elevation: 2
-    property color color: Material.backgroundColor
-    Material.background: color
+    Material.background: bgColor
+
+    signal clicked()
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: card.clicked()
+    }
+
     RowLayout {
         anchors.fill: parent
         Label {
             font.pixelSize: 24
-            text: "Ejemplo"
+            text: card.subject
         }
         Item { Layout.fillWidth: true }
 
@@ -22,15 +36,10 @@ Pane {
             Label {
                 font.family: "Material Icons"
                 font.pixelSize: 24
-                text: Icons.list.book
-            }
-            Label {
-                font.family: "Material Icons"
-                font.pixelSize: 24
                 text: Icons.list.assignment
             }
             Label {
-                text: "3"
+                text: card.taskNumb
                 font.bold: true
             }
         }

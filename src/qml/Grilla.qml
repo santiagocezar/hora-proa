@@ -25,20 +25,38 @@ Item {
             var day = i
             v.forEach(function (v,i,a) {
                 var mod = week.getDay(day).getMod(v.pos)
+                mod.uid = v.uid
                 mod.duration = v.duration
                 mod.empty = false
+                mod.name = dta.getSubjectName(v.uid)
+                mod.color = dta.getSubjectColor(v.uid)
+                week.getDay(day).updateCells(v.pos, v.duration)
             })
-            week.getDay(day).updateCells()
         })
     }
 
-    function setJsonMod (day, pos, duration, id) {
+    property bool selecting: false
+    property int selectDay
+    property int selectIndex
+    function selected(id, duration) {
+        var mod = week.getDay(selectDay).getMod(selectIndex)
+        mod.name = dta.getSubjectName(id)
+        mod.duration = duration
+        mod.empty = false
+        mod.color = dta.getSubjectColor(id)
+        mod.uid = id
+        week.getDay(selectDay).updateCells(selectIndex, duration)
+        save(selectDay, selectIndex, mod.duration, id)
+
+        selecting = false
+    }
+
+    function save (day, pos, duration, uid) {
         if (day === undefined) return
         if (pos === undefined) return
         if (duration === undefined) return
-        if (id === undefined) return
+        if (uid === undefined) return
 
-        console.log(day, pos, duration, id)
         var d = jsonData.days[day]
         var exists = false
         var mod
@@ -46,15 +64,16 @@ Item {
         for (var i in d) {
             if (i.positon === pos) {
                 i.duration = duration
-                i.id = id
+                i.uid = uid
                 break
             }
         }
 
         if (!exists) {
-            mod = d.push({"id":id,"pos":pos,"duration":duration})
+            d.push({"uid":uid,"pos":pos,"duration":duration})
         }
         dta.setJson(JSON.stringify(jsonData))
+        dta.save(dta.getOpened())
     }
 
     ColumnLayout {
@@ -167,8 +186,6 @@ Item {
                             id: repeat
                             model: table.rows
                             function updateCells(i, d) {
-                                console.log("i:", i, "d:", d)
-
                                 for (var j = 1; j < d; j++) {
                                     try {
                                         if (!itemAt(i+j).empty) {
@@ -193,14 +210,17 @@ Item {
                                 for (j = d; j < 3; j++) {
                                     itemAt(i+j).visible = true
                                 }
-
-                                setJsonMod(day.dayNumber(), i, d, 0)
+                                console.log("uUUUU:", itemAt(i).uid)
                             }
 
                             Modulo {
                                 rowHeight: day.height / table.rows
                                 Layout.fillWidth: true
-                                onModified: repeat.updateCells(i, d)
+                                onClicked: {
+                                    table.selectDay = day.dayNumber()
+                                    table.selectIndex = index
+                                    table.selecting = true
+                                }
                             }
                         }
                     }

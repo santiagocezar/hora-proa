@@ -34,11 +34,17 @@ ApplicationWindow {
     }
 
     SwipeView {
+        id: swipe
         anchors.fill: parent
         currentIndex: tabs.currentIndex
 
         onCurrentIndexChanged: {
             tabs.currentIndex = currentIndex
+
+            if (currentIndex == 0) { // operation canceled
+                table.selecting = false
+                materias.selectMode = false
+            }
         }
 
         Item {
@@ -46,6 +52,12 @@ ApplicationWindow {
                 id: table
                 anchors.fill: parent
                 anchors.margins: 16
+                onSelectingChanged: {
+                    if (selecting) {
+                        materias.selectMode = true
+                        swipe.incrementCurrentIndex()
+                    }
+                }
             }
         }
 
@@ -53,6 +65,11 @@ ApplicationWindow {
             Materias {
                 id: materias
                 anchors.fill: parent
+                onSelected: function (id, duration) {
+                    table.selected(id, duration)
+                    swipe.decrementCurrentIndex()
+                    selectMode = false
+                }
             }
         }
 
