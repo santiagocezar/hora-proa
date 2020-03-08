@@ -29,6 +29,8 @@ protected:
 
     QString appData = Paths::writableLocation(Paths::AppDataLocation);
 
+    QString opened;
+
     json jsonData;
 
 public:
@@ -36,9 +38,13 @@ public:
     explicit Data(QObject *parent = nullptr);
 
     Q_INVOKABLE qint8 open(QString name);
+    Q_INVOKABLE QString getOpened();
     Q_INVOKABLE void save(QString name);
     Q_INVOKABLE QString getJson();
     Q_INVOKABLE void setJson(QString j);
+    Q_INVOKABLE unsigned subjectUID();
+    Q_INVOKABLE QString getSubjectName(unsigned uid);
+    Q_INVOKABLE QString getSubjectColor(unsigned uid);
 
 };
 

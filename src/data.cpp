@@ -24,7 +24,7 @@ Data::Data(QObject *parent) : QObject(parent) {
             "16:15 a 16:55",
             "16:55 a 17:35"
         ],
-        "days": [[]],
+        "days": [[],[],[],[],[]],
         "subjects":[]
     }
     )"_json;
@@ -55,7 +55,6 @@ Data::Data(QObject *parent) : QObject(parent) {
             "days": {
                 "type": "array",
                 "title": "Days of the week",
-                "maxLength": 5,
                 "items": {
                     "type": "array",
                     "title": "Day",
@@ -63,12 +62,12 @@ Data::Data(QObject *parent) : QObject(parent) {
                         "type": "object",
                         "title": "Module",
                         "required": [
-                            "id",
+                            "uid",
                             "pos",
                             "duration"
                         ],
                         "properties": {
-                            "id": {
+                            "uid": {
                                 "type": "integer"
                             },
                             "pos": {
@@ -91,7 +90,8 @@ Data::Data(QObject *parent) : QObject(parent) {
                     "title": "Subject",
                     "required": [
                         "name",
-                        "color"
+                        "color",
+                        "uid"
                     ],
                     "properties": {
                         "name": {
@@ -99,6 +99,9 @@ Data::Data(QObject *parent) : QObject(parent) {
                         },
                         "color": {
                             "type": "string"
+                        },
+                        "uid": {
+                            "type": "integer"
                         }
                     }
                 }
@@ -109,6 +112,8 @@ Data::Data(QObject *parent) : QObject(parent) {
 }
 
 qint8 Data::open(QString name) {
+    opened = name;
+
     json_validator v;
 
     try {
@@ -132,12 +137,25 @@ qint8 Data::open(QString name) {
 
     try {
         v.validate(jsonData);
+
+        unsigned daysSize = jsonData["days"].size();
+        cout << daysSize << endl;
+        if (daysSize < 5) {
+            for (unsigned j = 0; j < 5 - daysSize; ++j) {
+                jsonData["days"].push_back(jsonData.array());
+            }
+        }
+
         return true;
     } catch (const exception &e) {
         cerr << e.what() << endl;
         jsonData = defaultPlanilla;
         return false;
     }
+}
+
+QString Data::getOpened() {
+    return opened;
 }
 
 void Data::save(QString name) {
@@ -153,4 +171,33 @@ QString Data::getJson() {
 
 void Data::setJson(QString j) {
     jsonData = json::parse(j.toStdString());
+}
+
+unsigned Data::subjectUID() {
+    int uid = 0;
+    while ( [&] () {
+        for (json subject : jsonData["subjects"]) {
+           if (subject["uid"] == uid) return true;
+        }
+        return false;
+    } () ) uid++;
+    return uid;
+}
+
+QString Data::getSubjectName(unsigned uid) {
+    for (json subject : jsonData["subjects"]) {
+       if (subject["uid"] == uid) {
+           return QString::fromStdString(subject["name"]);
+       }
+    }
+    return QString();
+}
+
+QString Data::getSubjectColor(unsigned uid) {
+    for (json subject : jsonData["subjects"]) {
+       if (subject["uid"] == uid) {
+           return QString::fromStdString(subject["color"]);
+       }
+    }
+    return QString();
 }
