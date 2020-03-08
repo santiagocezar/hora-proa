@@ -5,14 +5,14 @@ import QtQuick.Controls.Material 2.12
 Button {
     readonly property var __colors: [
         Material.Red,
+        Material.Orange,
+        Material.Amber,
+        Material.Green,
+        Material.Teal,
+        Material.Cyan,
+        Material.Blue,
         Material.Purple,
         Material.DeepPurple,
-        Material.Blue,
-        Material.Cyan,
-        Material.Teal,
-        Material.Green,
-        Material.Amber,
-        Material.Orange,
         Material.Grey,
     ]
 
