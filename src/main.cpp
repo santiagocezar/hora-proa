@@ -4,6 +4,9 @@
 #include <data.h>
 #include <QQmlContext>
 
+#include <QtQuick>
+#include <QtQuickControls2>
+
 #include <iostream>
 using namespace std;
 
@@ -28,6 +31,6 @@ int main(int argc, char *argv[])
     engine.load(url);
 
     auto r = app.exec();
-    p.save("aa");
+    p.save(p.getOpened());
     return r;
 }
