@@ -16,6 +16,13 @@ Item {
 
     property var jsonData
 
+    Connections {
+        target: dta
+        onJsonUpdated: {
+            jsonData = JSON.parse(dta.getJson())
+        }
+    }
+
     Component.onCompleted: {
         jsonData = JSON.parse(dta.getJson())
         jsonData.days.forEach(function (v, i, a) {
@@ -210,7 +217,6 @@ Item {
                                 for (j = d; j < 3; j++) {
                                     itemAt(i+j).visible = true
                                 }
-                                console.log("uUUUU:", itemAt(i).uid)
                             }
 
                             Modulo {

@@ -46,6 +46,10 @@ public:
     Q_INVOKABLE QString getSubjectName(unsigned uid);
     Q_INVOKABLE QString getSubjectColor(unsigned uid);
 
+signals:
+
+    void jsonUpdated();
+
 };
 
 #endif // DATA_H

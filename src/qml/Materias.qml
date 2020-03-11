@@ -17,6 +17,13 @@ Item {
 
     signal selected(int id, int duration)
 
+    Connections {
+        target: dta
+        onJsonUpdated: {
+            jsonData = JSON.parse(dta.getJson())
+        }
+    }
+
     Component.onCompleted: {
         jsonData = JSON.parse(dta.getJson())
 

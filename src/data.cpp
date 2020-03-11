@@ -171,6 +171,7 @@ QString Data::getJson() {
 
 void Data::setJson(QString j) {
     jsonData = json::parse(j.toStdString());
+    jsonUpdated();
 }
 
 unsigned Data::subjectUID() {
