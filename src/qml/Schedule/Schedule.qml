@@ -5,12 +5,11 @@ import QtQuick.Controls.Material 2.12
 
 import QtQuick.Layouts 1.12
 
-import "tools.js" as Tools
-import "icons.js" as Icons
+import "../icons.js" as Icons
 
 Item {
-
     id: table
+
     readonly property int columns: 6
     readonly property int rows: 14
 

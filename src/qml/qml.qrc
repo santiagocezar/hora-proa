@@ -2,11 +2,9 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
-        <file>tools.js</file>
-        <file>Modulo.qml</file>
-        <file>ModuloCell.qml</file>
         <file>MaterialColorButton.qml</file>
-        <file>Grilla.qml</file>
+        <file>Schedule/Schedule.qml</file>
+        <file>Schedule/Modulo.qml</file>
         <file>MateriaCard.qml</file>
         <file>icons.js</file>
         <file>Materias.qml</file>

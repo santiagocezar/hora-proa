@@ -5,7 +5,7 @@ import QtQuick.Controls.Material 2.12
 
 import QtQuick.Layouts 1.12
 
-import "tools.js" as Tools
+import "Schedule"
 import "icons.js" as Icons
 
 ApplicationWindow {
@@ -48,7 +48,7 @@ ApplicationWindow {
         }
 
         Item {
-            Grilla {
+            Schedule {
                 id: table
                 anchors.fill: parent
                 anchors.margins: 16

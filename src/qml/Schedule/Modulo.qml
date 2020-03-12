@@ -5,8 +5,6 @@ import QtQuick.Controls.Material 2.12
 
 import QtQuick.Layouts 1.12
 
-import "tools.js" as Tools
-
 Item {
     id: module
 
@@ -30,7 +28,7 @@ Item {
         anchors.fill: parent
         anchors.margins: 4
 
-        Material.background: empty ? Material.backgroundColor : module.color
+        Material.background: module.empty ? Material.primary : module.color
 
         Component.onCompleted: {
             if (!empty) {
@@ -52,9 +50,31 @@ Item {
 
     MouseArea { // a lo ultimo porque si no, no se le puede hacer click
         anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-        onClicked: module.clicked()
+        onClicked: {
+            if (empty && mouse.button & Qt.LeftButton) {
+                module.clicked()
+            }
+            if (!empty && mouse.button & Qt.RightButton) {
+                menu.popup()
+            }
+
+        }
+        onPressAndHold: {
+            if (!empty) menu.popup()
+        }
     }
 
+    Menu {
+        id: menu
+        MenuItem {
+            text: "Editar"
+        }
+        MenuItem {
+            text: "Borrar"; Material.foreground: Material.Red; font.bold: true
+            onClicked: module.empty = true
+        }
+    }
 }
 

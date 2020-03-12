@@ -5,7 +5,6 @@ import QtQuick.Controls.Material 2.12
 
 import QtQuick.Layouts 1.12
 
-import "tools.js" as Tools
 import "icons.js" as Icons
 
 Item {
@@ -162,7 +161,6 @@ Item {
                 var uid = dta.subjectUID()
                 materiaModel.append({"name": name.text, "col": colorButton.color.toString(), "uidL": uid})
                 jsonData.subjects.push({"name": name.text, "color": colorButton.color.toString(), "uid": uid})
-                console.log("Generated UID:", uid)
                 dta.setJson(JSON.stringify(jsonData))
             }
         } // Dialogo Añadir materia
